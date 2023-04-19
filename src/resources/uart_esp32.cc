@@ -436,7 +436,6 @@ UART_ISR_INLINE void UartResource::disable_rx_interrupts() {
 }
 
 UART_ISR_INLINE void UartResource::enable_tx_interrupts(bool begin) {
-  enable_interrupt_index(UART_TOIT_INTR_TXFIFO_EMPTY);
   if (begin && is_rs485_half_duplex_mode()) {
     if (rts_active_) {
       // The RTS is already active, so we avoid de-activating
@@ -452,8 +451,11 @@ UART_ISR_INLINE void UartResource::enable_tx_interrupts(bool begin) {
       // Set the RTS to active.
       uart_toit_hal_set_rts(hal_, true);
       rts_active_ = true;
+      uint32 rate = baud_rate();
+      esp_rom_delay_us((1000000 + rate - 1) / rate);
     }
   }
+  enable_interrupt_index(UART_TOIT_INTR_TXFIFO_EMPTY);
 }
 
 UART_ISR_INLINE void UartResource::disable_tx_interrupts(bool done) {
