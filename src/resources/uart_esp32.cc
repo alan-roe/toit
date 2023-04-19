@@ -451,8 +451,7 @@ UART_ISR_INLINE void UartResource::enable_tx_interrupts(bool begin) {
       // Set the RTS to active.
       uart_toit_hal_set_rts(hal_, true);
       rts_active_ = true;
-      uint32 rate = baud_rate();
-      esp_rom_delay_us(10 * ((1000000 + rate - 1) / rate));
+      esp_rom_delay_us(5000);
     }
   }
   enable_interrupt_index(UART_TOIT_INTR_TXFIFO_EMPTY);
