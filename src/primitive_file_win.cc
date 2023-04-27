@@ -284,14 +284,14 @@ PRIMITIVE(read) {
   AllocationManager allocation(process);
   uint8* buffer = allocation.alloc(SIZE);
   if (!buffer) {
-    printf("[file.read: %d - failed buffer alloc]\n", n);
+    fprintf(stderr, "[file.read: %d - failed buffer alloc]\n", n);
     ALLOCATION_FAILED;
   }
 
   ByteArray* result = process->object_heap()->allocate_external_byte_array(
       SIZE, buffer, true /* dispose */, false /* clear */);
   if (!result) {
-    printf("[file.read: %d - failed byte array alloc]\n", n);
+    fprintf(stderr, "[file.read: %d - failed byte array alloc]\n", n);
     ALLOCATION_FAILED;
   }
   allocation.keep_result();
