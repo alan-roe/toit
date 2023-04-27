@@ -275,18 +275,28 @@ PRIMITIVE(closedir) {
   return process->program()->null_object();
 }
 
+static int n = 0;
+
 PRIMITIVE(read) {
   ARGS(int, fd);
   const int SIZE = 1 * MB;
 
   AllocationManager allocation(process);
   uint8* buffer = allocation.alloc(SIZE);
-  if (!buffer) ALLOCATION_FAILED;
+  if (!buffer) {
+    printf("[file.read: %d - failed buffer alloc]\n", n);
+    ALLOCATION_FAILED;
+  }
 
   ByteArray* result = process->object_heap()->allocate_external_byte_array(
       SIZE, buffer, true /* dispose */, false /* clear */);
-  if (!result) ALLOCATION_FAILED;
+  if (!result) {
+    printf("[file.read: %d - failed byte array alloc]\n", n);
+    ALLOCATION_FAILED;
+  }
   allocation.keep_result();
+
+  n++;
 
   ssize_t buffer_fullness = 0;
   while (buffer_fullness < SIZE) {
