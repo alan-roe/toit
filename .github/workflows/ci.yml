@@ -180,8 +180,8 @@ jobs:
         shell: bash
         if: runner.os == 'macOS'
         run: |
-          python3 -m pip install jsonschema
-          python3 -m pip install jinja2
+          /usr/local/Frameworks/Python.framework/Versions/3.11/bin/python3.11 -m pip install jsonschema
+          /usr/local/Frameworks/Python.framework/Versions/3.11/bin/python3.11 -m pip install jinja2
 
       - name: Setup compilation env
         shell: bash
