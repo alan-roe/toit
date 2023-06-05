@@ -159,6 +159,9 @@ jobs:
         if: matrix.shard == 1 && runner.os != 'Windows'
         with:
           python-version: '3.10'
+        run: |
+          pip3 install jsonschema
+          pip3 install jinja2
 
       - name: Set up Python - Windows
         uses: actions/setup-python@v4
@@ -166,6 +169,9 @@ jobs:
         with:
           # Use 3.8 since that version still works on Windows 7.
           python-version: '3.8'
+        run: |
+          pip3 install jsonschema
+          pip3 install jinja2
 
       - name: Setup compilation env
         shell: bash
