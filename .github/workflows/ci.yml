@@ -171,8 +171,8 @@ jobs:
       - name: Add jsonschema and jython2
         shell: bash
         run: |
-          pip3 install jsonschema
-          pip3 install jinja2
+          python -m pip install jsonschema
+          python -m pip install jinja2
 
       - name: Setup compilation env
         shell: bash
